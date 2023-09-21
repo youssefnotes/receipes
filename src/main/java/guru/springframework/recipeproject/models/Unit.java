@@ -2,13 +2,13 @@ package guru.springframework.recipeproject.models;
 
 import jakarta.persistence.*;
 
-import java.awt.image.BufferedImage;
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
 @Entity
-public class Unit {
+public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String UnitNumber;

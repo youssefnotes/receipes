@@ -2,10 +2,11 @@ package guru.springframework.recipeproject.models;
 
 import jakarta.persistence.*;
 
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 @Entity
-public class Project {
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

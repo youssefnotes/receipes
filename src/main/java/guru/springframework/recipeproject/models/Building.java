@@ -2,11 +2,12 @@ package guru.springframework.recipeproject.models;
 
 import jakarta.persistence.*;
 
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Date;
 @Entity
-public class Building {
+public class Building implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String buildingCode;

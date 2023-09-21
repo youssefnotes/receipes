@@ -3,10 +3,11 @@ package guru.springframework.recipeproject.models;
 import jakarta.persistence.*;
 import org.apache.tomcat.util.json.Token;
 
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 @Entity
-public class Users {
+public class Users implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
