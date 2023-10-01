@@ -1,5 +1,6 @@
 package guru.springframework.recipeproject.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.apache.tomcat.util.json.Token;
 
@@ -17,9 +18,10 @@ public class Users implements Serializable {
         private String email;
         private String password;
         private Token rememberToken;
-        private Timestamp created_at;
-        private Timestamp updated_at;
-
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Timestamp created_at;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Timestamp updated_at;
     public Users() {
     }
 

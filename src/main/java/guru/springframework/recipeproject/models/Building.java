@@ -1,8 +1,10 @@
 package guru.springframework.recipeproject.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -10,16 +12,18 @@ import java.util.Date;
 public class Building implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String buildingCode;
+    private long buildingCode;
     private String description;
-    private DecimalFormat type;
-    private DecimalFormat zone;
+    private BigDecimal type;
+    private BigDecimal zone;
     private String cCode;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp created_at;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "projectCode", referencedColumnName = "projectCode")
+    @JoinColumn(name = "project_code", referencedColumnName = "project_code")
     private Project project;
 
     @OneToOne(mappedBy = "building")
@@ -29,7 +33,8 @@ public class Building implements Serializable {
     public Building() {
     }
 
-    public Building(String buildingCode, String description, DecimalFormat type, DecimalFormat zone, String cCode, Timestamp created_at, Timestamp updated_at, Project project) {
+
+    public Building(long buildingCode, String description, BigDecimal type, BigDecimal zone, String cCode, Timestamp created_at, Timestamp updated_at, Project project, Unit unit) {
         this.buildingCode = buildingCode;
         this.description = description;
         this.type = type;
@@ -38,14 +43,23 @@ public class Building implements Serializable {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.project = project;
+        this.unit = unit;
     }
 
-    public String getBuildingCode() {
+    public long getBuildingCode() {
         return buildingCode;
     }
 
-    public void setBuildingCode(String buildingCode) {
+    public void setBuildingCode(long buildingCode) {
         this.buildingCode = buildingCode;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public String getDescription() {
@@ -56,19 +70,19 @@ public class Building implements Serializable {
         this.description = description;
     }
 
-    public DecimalFormat getType() {
+    public BigDecimal getType() {
         return type;
     }
 
-    public void setType(DecimalFormat type) {
+    public void setType(BigDecimal type) {
         this.type = type;
     }
 
-    public DecimalFormat getZone() {
+    public BigDecimal getZone() {
         return zone;
     }
 
-    public void setZone(DecimalFormat zone) {
+    public void setZone(BigDecimal zone) {
         this.zone = zone;
     }
 

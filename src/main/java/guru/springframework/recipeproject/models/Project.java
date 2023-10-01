@@ -1,5 +1,6 @@
 package guru.springframework.recipeproject.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -10,12 +11,15 @@ public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String projectCode;
+    private long projectCode;
     private String description;
     private Date validFrom;
     private String cCode;
     private String phase;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp created_at;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
     @OneToOne(mappedBy = "project")
@@ -26,7 +30,8 @@ public class Project implements Serializable {
 
     public Project() {
     }
-    public Project(String projectCode, String description, Date validFrom, String cCode, String phase, Timestamp created_at, Timestamp updated_at) {
+
+    public Project(long projectCode, String description, Date validFrom, String cCode, String phase, Timestamp created_at, Timestamp updated_at, Building building, Unit unit) {
         this.projectCode = projectCode;
         this.description = description;
         this.validFrom = validFrom;
@@ -34,14 +39,32 @@ public class Project implements Serializable {
         this.phase = phase;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.building = building;
+        this.unit = unit;
     }
 
-    public String getProjectCode() {
+    public long getProjectCode() {
         return projectCode;
     }
 
-    public void setProjectCode(String projectCode) {
+    public void setProjectCode(long projectCode) {
         this.projectCode = projectCode;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public String getDescription() {

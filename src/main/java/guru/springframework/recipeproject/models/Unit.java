@@ -1,8 +1,10 @@
 package guru.springframework.recipeproject.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -11,31 +13,33 @@ import java.util.Arrays;
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String UnitNumber;
+    private long UnitNumber;
     private String description;
     private String status;
 
-    private DecimalFormat floor;
-    private DecimalFormat priceAmount;
+    private BigDecimal floor;
+    private BigDecimal priceAmount;
     private String priceCurr;
-    private DecimalFormat size;
+    private BigDecimal size;
     private String unitOfMeasurement;
     private byte[] layoutImage;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp created_at;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "projectCode", referencedColumnName = "projectCode")
+    @JoinColumn(name = "project_code", referencedColumnName = "project_code")
     private Project project;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "buildingCode", referencedColumnName = "buildingCode")
+    @JoinColumn(name = "building_code", referencedColumnName = "building_code")
     private Building building;
 
     public Unit() {
     }
 
-    public Unit(String unitNumber, String description, String status, DecimalFormat floor, DecimalFormat priceAmount, String priceCurr, DecimalFormat size, String unitOfMeasurement, byte[] layoutImage, Timestamp created_at, Timestamp updated_at, Project project, Building building) {
+    public Unit(long unitNumber, String description, String status, BigDecimal floor, BigDecimal priceAmount, String priceCurr, BigDecimal size, String unitOfMeasurement, byte[] layoutImage, Timestamp created_at, Timestamp updated_at, Project project, Building building) {
         UnitNumber = unitNumber;
         this.description = description;
         this.status = status;
@@ -51,11 +55,11 @@ public class Unit implements Serializable {
         this.building = building;
     }
 
-    public String getUnitNumber() {
+    public long getUnitNumber() {
         return UnitNumber;
     }
 
-    public void setUnitNumber(String unitNumber) {
+    public void setUnitNumber(long unitNumber) {
         UnitNumber = unitNumber;
     }
 
@@ -75,21 +79,6 @@ public class Unit implements Serializable {
         this.status = status;
     }
 
-    public DecimalFormat getFloor() {
-        return floor;
-    }
-
-    public void setFloor(DecimalFormat floor) {
-        this.floor = floor;
-    }
-
-    public DecimalFormat getPriceAmount() {
-        return priceAmount;
-    }
-
-    public void setPriceAmount(DecimalFormat priceAmount) {
-        this.priceAmount = priceAmount;
-    }
 
     public String getPriceCurr() {
         return priceCurr;
@@ -99,11 +88,27 @@ public class Unit implements Serializable {
         this.priceCurr = priceCurr;
     }
 
-    public DecimalFormat getSize() {
+    public BigDecimal getFloor() {
+        return floor;
+    }
+
+    public void setFloor(BigDecimal floor) {
+        this.floor = floor;
+    }
+
+    public BigDecimal getPriceAmount() {
+        return priceAmount;
+    }
+
+    public void setPriceAmount(BigDecimal priceAmount) {
+        this.priceAmount = priceAmount;
+    }
+
+    public BigDecimal getSize() {
         return size;
     }
 
-    public void setSize(DecimalFormat size) {
+    public void setSize(BigDecimal size) {
         this.size = size;
     }
 

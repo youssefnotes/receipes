@@ -1,5 +1,6 @@
 package guru.springframework.recipeproject.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -11,17 +12,20 @@ import java.sql.Timestamp;
 public class PasswordResets implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private long  token;
     private String email;
-    private String token;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp created_at;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
     public PasswordResets() {
     }
 
-    public PasswordResets(String email, String token, Timestamp created_at, Timestamp updated_at) {
-        this.email = email;
+    public PasswordResets(long token, String email, Timestamp created_at, Timestamp updated_at) {
         this.token = token;
+        this.email = email;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -35,11 +39,11 @@ public class PasswordResets implements Serializable {
     }
 
 
-    public String getToken() {
+    public long getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(long token) {
         this.token = token;
     }
 
