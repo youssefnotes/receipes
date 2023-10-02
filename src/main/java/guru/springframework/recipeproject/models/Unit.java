@@ -1,7 +1,10 @@
 package guru.springframework.recipeproject.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,14 +31,11 @@ public class Unit implements Serializable {
     private Timestamp created_at;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
-
-//    @ManyToOne
-//    @JoinColumn(name = "projectCode_fk", referencedColumnName = "projectCode")
-//    private Project project;
-
-//    @ManyToOne
-//    @JoinColumn(name = "buildingCode_fk", referencedColumnName = "buildingCode")
-//    private Building building;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "buildingCode", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Building building;
 
 
     public Unit() {

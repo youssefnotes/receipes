@@ -1,6 +1,5 @@
 package guru.springframework.recipeproject.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -8,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
-@Table(name="project")
+@Table(name = "projects")
 public class Project implements Serializable {
 
     @Id
@@ -16,24 +15,27 @@ public class Project implements Serializable {
     @Column(name = "projectCode")
     private Integer projectCode;
     private String description;
-//    private Date validFrom;
+    //    private Date validFrom;
     private String cCode;
     private String phase;
+    @OneToMany
+    private final Set<Building> buildings;
 
-    public Project() {
-    }
 
-
-    public Project(Integer projectCode, String description, Date validFrom, String cCode, String phase, Timestamp created_at, Timestamp updated_at, List<Building> buildings, Set<Unit> units) {
+    public Project(Integer projectCode, String description, Date validFrom, String cCode, String phase,
+                   Timestamp created_at, Timestamp updated_at, Set<Unit> units,
+                   Set<Building> buildings) {
         this.projectCode = projectCode;
         this.description = description;
 //        this.validFrom = validFrom;
         this.cCode = cCode;
         this.phase = phase;
-
+        this.buildings = buildings;
     }
 
-
+    public Project() {
+        buildings = null;
+    }
 
 
     public String getDescription() {

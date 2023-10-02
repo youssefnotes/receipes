@@ -1,13 +1,11 @@
 package guru.springframework.recipeproject.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import java.util.Set;
@@ -20,28 +18,36 @@ public class Building implements Serializable {
     @Column(name = "buildingCode")
     private long buildingCode;
     private String description;
-    private BigDecimal type;
-    private BigDecimal zone;
-    private String cCode;
-
-
+    private Integer type;
+    private Integer zone;
+    private Integer cCode;
+    @OneToMany
+    private final Set<Unit> units;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "projectCode", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Project project;
 
-    public Building() {
+    public Building(Set<Unit> units) {
+        this.units = units;
     }
 
-    public Building(Integer buildingCode, String description, BigDecimal type, BigDecimal zone, String cCode, Timestamp created_at, Timestamp updated_at, Set<Unit> units, Project project) {
+    public Building(Integer buildingCode, String description, Integer type, Integer zone, Integer cCode,
+                    Timestamp created_at, Timestamp updated_at, Set<Unit> units, Project project) {
         this.buildingCode = buildingCode;
         this.description = description;
         this.type = type;
         this.zone = zone;
         this.cCode = cCode;
+        this.units = units;
 
         this.project = project;
+    }
+
+    public Building() {
+
+        units = null;
     }
 
     public Long getBuildingCode() {
@@ -61,27 +67,27 @@ public class Building implements Serializable {
         this.description = description;
     }
 
-    public BigDecimal getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(BigDecimal type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public BigDecimal getZone() {
+    public Integer getZone() {
         return zone;
     }
 
-    public void setZone(BigDecimal zone) {
+    public void setZone(Integer zone) {
         this.zone = zone;
     }
 
-    public String getcCode() {
+    public Integer getcCode() {
         return cCode;
     }
 
-    public void setcCode(String cCode) {
+    public void setcCode(Integer cCode) {
         this.cCode = cCode;
     }
 
