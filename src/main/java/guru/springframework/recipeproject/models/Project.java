@@ -6,12 +6,17 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
+@Table(name="Project")
 public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long projectCode;
+    @Column(name = "projectCode")
+    private Integer projectCode;
     private String description;
     private Date validFrom;
     private String cCode;
@@ -22,16 +27,25 @@ public class Project implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
-    @OneToOne(mappedBy = "project")
-    private Building building;
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    private Set<Building> buildings = new HashSet<>();
 
-    @OneToOne(mappedBy = "project")
-    private Unit unit;
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    private Set<Unit> units = new HashSet<>();
 
+    public void addUnit(Unit unit) {
+        getUnits().add(unit);
+        unit.setProject(this);
+    }
+    public void addBuilding(Building building) {
+        getBuildings().add(building);
+        building.setProject(this);
+    }
     public Project() {
     }
 
-    public Project(long projectCode, String description, Date validFrom, String cCode, String phase, Timestamp created_at, Timestamp updated_at, Building building, Unit unit) {
+
+    public Project(Integer projectCode, String description, Date validFrom, String cCode, String phase, Timestamp created_at, Timestamp updated_at, Set<Building> buildings, Set<Unit> units) {
         this.projectCode = projectCode;
         this.description = description;
         this.validFrom = validFrom;
@@ -39,32 +53,25 @@ public class Project implements Serializable {
         this.phase = phase;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.building = building;
-        this.unit = unit;
+        this.buildings = buildings;
+        this.units = units;
     }
 
-    public long getProjectCode() {
-        return projectCode;
+
+    public Set<Building> getBuildings() {
+        return buildings;
     }
 
-    public void setProjectCode(long projectCode) {
-        this.projectCode = projectCode;
+    public void setBuildings(Set<Building> buildings) {
+        this.buildings = buildings;
     }
 
-    public Building getBuilding() {
-        return building;
+    public Set<Unit> getUnits() {
+        return units;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setUnits(Set<Unit> units) {
+        this.units = units;
     }
 
     public String getDescription() {

@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class PasswordResets implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long  token;
+    private Integer  token;
     private String email;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -23,11 +23,19 @@ public class PasswordResets implements Serializable {
     public PasswordResets() {
     }
 
-    public PasswordResets(long token, String email, Timestamp created_at, Timestamp updated_at) {
+    public PasswordResets(Integer token, String email, Timestamp created_at, Timestamp updated_at) {
         this.token = token;
         this.email = email;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public Integer getToken() {
+        return token;
+    }
+
+    public void setToken(Integer token) {
+        this.token = token;
     }
 
     public String getEmail() {
@@ -38,14 +46,6 @@ public class PasswordResets implements Serializable {
         this.email = email;
     }
 
-
-    public long getToken() {
-        return token;
-    }
-
-    public void setToken(long token) {
-        this.token = token;
-    }
 
     public Timestamp getCreated_at() {
         return created_at;

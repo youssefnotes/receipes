@@ -12,7 +12,7 @@ public class Users implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private Long id;
+        private Integer id;
         private String name;
         @Column(unique=true)
         private String email;
@@ -25,8 +25,7 @@ public class Users implements Serializable {
     public Users() {
     }
 
-
-    public Users(Long id, String name, String email, String password, Token rememberToken, Timestamp created_at, Timestamp updated_at) {
+    public Users(Integer id, String name, String email, String password, Token rememberToken, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -34,6 +33,14 @@ public class Users implements Serializable {
         this.rememberToken = rememberToken;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getPassword() {
@@ -44,13 +51,6 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

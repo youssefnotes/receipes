@@ -8,11 +8,16 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
+@Table(name="Building")
 public class Building implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long buildingCode;
+    @Column(name = "buildingCode")
+    private Integer buildingCode;
     private String description;
     private BigDecimal type;
     private BigDecimal zone;
@@ -22,19 +27,21 @@ public class Building implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_code", referencedColumnName = "project_code")
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private Set<Unit> units = new HashSet<Unit>();
+
+    @ManyToOne
+    @JoinColumn(name = "projectCode_fk", referencedColumnName = "projectCode")
     private Project project;
 
-    @OneToOne(mappedBy = "building")
-    private Unit unit;
-
-
+    public void addUnit(Unit unit) {
+        getUnits().add(unit);
+        unit.setBuilding(this);
+    }
     public Building() {
     }
 
-
-    public Building(long buildingCode, String description, BigDecimal type, BigDecimal zone, String cCode, Timestamp created_at, Timestamp updated_at, Project project, Unit unit) {
+    public Building(Integer buildingCode, String description, BigDecimal type, BigDecimal zone, String cCode, Timestamp created_at, Timestamp updated_at, Set<Unit> units, Project project) {
         this.buildingCode = buildingCode;
         this.description = description;
         this.type = type;
@@ -42,24 +49,24 @@ public class Building implements Serializable {
         this.cCode = cCode;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.units = units;
         this.project = project;
-        this.unit = unit;
     }
 
-    public long getBuildingCode() {
+    public Integer getBuildingCode() {
         return buildingCode;
     }
 
-    public void setBuildingCode(long buildingCode) {
+    public void setBuildingCode(Integer buildingCode) {
         this.buildingCode = buildingCode;
     }
 
-    public Unit getUnit() {
-        return unit;
+    public Set<Unit> getUnits() {
+        return units;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setUnits(Set<Unit> units) {
+        this.units = units;
     }
 
     public String getDescription() {

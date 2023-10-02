@@ -10,10 +10,11 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 @Entity
+@Table(name="Unit")
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long UnitNumber;
+    private Integer UnitNumber;
     private String description;
     private String status;
 
@@ -28,18 +29,19 @@ public class Unit implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_code", referencedColumnName = "project_code")
+    @ManyToOne
+    @JoinColumn(name = "projectCode_fk", referencedColumnName = "projectCode")
     private Project project;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "building_code", referencedColumnName = "building_code")
+    @ManyToOne
+    @JoinColumn(name = "buildingCode_fk", referencedColumnName = "buildingCode")
     private Building building;
+
 
     public Unit() {
     }
 
-    public Unit(long unitNumber, String description, String status, BigDecimal floor, BigDecimal priceAmount, String priceCurr, BigDecimal size, String unitOfMeasurement, byte[] layoutImage, Timestamp created_at, Timestamp updated_at, Project project, Building building) {
+    public Unit(Integer unitNumber, String description, String status, BigDecimal floor, BigDecimal priceAmount, String priceCurr, BigDecimal size, String unitOfMeasurement, byte[] layoutImage, Timestamp created_at, Timestamp updated_at, Project project, Building building) {
         UnitNumber = unitNumber;
         this.description = description;
         this.status = status;
@@ -55,11 +57,11 @@ public class Unit implements Serializable {
         this.building = building;
     }
 
-    public long getUnitNumber() {
+    public Integer getUnitNumber() {
         return UnitNumber;
     }
 
-    public void setUnitNumber(long unitNumber) {
+    public void setUnitNumber(Integer unitNumber) {
         UnitNumber = unitNumber;
     }
 
