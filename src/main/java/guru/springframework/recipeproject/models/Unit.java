@@ -10,11 +10,11 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 @Entity
-@Table(name="Unit")
+@Table(name="units")
 public class Unit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer UnitNumber;
+    private long UnitNumber;
     private String description;
     private String status;
 
@@ -29,13 +29,13 @@ public class Unit implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp updated_at;
 
-    @ManyToOne
-    @JoinColumn(name = "projectCode_fk", referencedColumnName = "projectCode")
-    private Project project;
+//    @ManyToOne
+//    @JoinColumn(name = "projectCode_fk", referencedColumnName = "projectCode")
+//    private Project project;
 
-    @ManyToOne
-    @JoinColumn(name = "buildingCode_fk", referencedColumnName = "buildingCode")
-    private Building building;
+//    @ManyToOne
+//    @JoinColumn(name = "buildingCode_fk", referencedColumnName = "buildingCode")
+//    private Building building;
 
 
     public Unit() {
@@ -53,13 +53,13 @@ public class Unit implements Serializable {
         this.layoutImage = layoutImage;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.project = project;
-        this.building = building;
+//        this.project = project;
+//        this.building = building;
     }
 
-    public Integer getUnitNumber() {
-        return UnitNumber;
-    }
+//    public Integer getUnitNumber() {
+//        return UnitNumber;
+//    }
 
     public void setUnitNumber(Integer unitNumber) {
         UnitNumber = unitNumber;
@@ -146,21 +146,21 @@ public class Unit implements Serializable {
         this.updated_at = updated_at;
     }
 
-    public Project getProject() {
-        return project;
-    }
+//    public Project getProject() {
+//        return project;
+//    }
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
+//    public void setProject(Project project) {
+//        this.project = project;
+//    }
 
-    public Building getBuilding() {
-        return building;
-    }
+//    public Building getBuilding() {
+//        return building;
+//    }
 
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
+//    public void setBuilding(Building building) {
+//        this.building = building;
+//    }
 
     @Override
     public String toString() {
@@ -176,8 +176,8 @@ public class Unit implements Serializable {
                 ", layoutImage=" + Arrays.toString(layoutImage) +
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
-                ", project=" + project +
-                ", building=" + building +
+//                ", project=" + project +
+//                ", building=" + building +
                 '}';
     }
 }
