@@ -18,12 +18,12 @@ public class Project implements Serializable {
     //    private Date validFrom;
     private String cCode;
     private String phase;
-    @OneToMany
+    @OneToMany(mappedBy = "project")
     private final Set<Building> buildings;
 
 
     public Project(Integer projectCode, String description, Date validFrom, String cCode, String phase,
-                   Timestamp created_at, Timestamp updated_at, Set<Unit> units,
+                   Timestamp created_at, Timestamp updated_at,
                    Set<Building> buildings) {
         this.projectCode = projectCode;
         this.description = description;

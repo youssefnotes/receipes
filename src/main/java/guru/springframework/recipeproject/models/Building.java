@@ -1,6 +1,7 @@
 package guru.springframework.recipeproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -21,13 +22,15 @@ public class Building implements Serializable {
     private Integer type;
     private Integer zone;
     private Integer cCode;
-    @OneToMany
+    @OneToMany(mappedBy = "building")
     private final Set<Unit> units;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "projectCode", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonProperty("project_code")
     private Project project;
+
+
 
     public Building(Set<Unit> units) {
         this.units = units;
